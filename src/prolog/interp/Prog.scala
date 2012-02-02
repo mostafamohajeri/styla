@@ -1,8 +1,14 @@
 package prolog.interp
 
-import prolog.terms._
 import prolog.fluents.DataBase
 import prolog.io.IO
+import prolog.terms.Answer
+import prolog.terms.Conj
+import prolog.terms.Copier
+import prolog.terms.ObjectStack
+import prolog.terms.Term
+import prolog.terms.TermSource
+import prolog.terms.Trail
 
 class Prog(val db: DataBase) extends TermSource {
   def this() = this(new DataBase(null))

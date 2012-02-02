@@ -1,10 +1,10 @@
 package prolog.fluents
 
-import java.io._
+//import java.io._
 import scala.collection.mutable._
+
 import prolog.terms._
 import prolog.interp.Prog
-
 import prolog.io._
 
 case class Key(f: String, n: Int)

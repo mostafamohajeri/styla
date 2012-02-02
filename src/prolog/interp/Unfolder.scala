@@ -1,6 +1,8 @@
 package prolog.interp
 
-import prolog.terms._
+import prolog.terms.SystemObject
+import prolog.terms.Term
+import prolog.terms.Trail
 
 class Unfolder(prog: Prog, val goal: List[Term], atClause: Iterator[List[Term]])
   extends SystemObject {

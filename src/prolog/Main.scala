@@ -1,7 +1,8 @@
 package prolog
 import prolog.interp.Prog
-import prolog.terms._
-import prolog.io._
+import prolog.io.IO
+import prolog.io.TermParser
+import prolog.terms.Term
 
 object Main extends App {
   go
