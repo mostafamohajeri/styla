@@ -1,0 +1,1 @@
+jrun "[nrev]" go "[perms]" go go1 "[q8]" go "println(done)" halt

@@ -1,0 +1,2 @@
+mkdir bin
+scalac -optimize -explaintypes -deprecation -unchecked -d bin  src/prolog/*.scala src/prolog/*/*.scala
