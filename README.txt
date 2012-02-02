@@ -4,7 +4,7 @@ The name STYLA stands tentatively for "Scala Terms Yield Logic Agents" but hints
 toward the fact that style (seen as "elegance" of implementation) has been a major
 design principle behind it.
 
-Fairly complete Prolog interpreter in Scala, derived from Kernel Prolog 
+Styla is a fairly complete Prolog interpreter written in Scala, derived from Kernel Prolog 
 (see Fluents: A Refactoring of Prolog for Uniform Reflection and 
 Interoperation with External Objects CL'2000).
 
