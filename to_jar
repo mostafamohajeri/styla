@@ -1,0 +1,5 @@
+rm -f styla.jar
+pushd .
+cd bin
+jar cvf ../styla.jar -e prolog.Main prolog
+popd

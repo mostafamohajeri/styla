@@ -28,7 +28,7 @@ and expected from a Prolog system should work.
 Take a look at prolog.Main for the start-up sequence - that gives
 a glimpse of how to embed it into a Scala or Java program.
 
-To add a new built-ins, just clone the closest match 
+To add a new built-in, just clone the closest match 
 in prolog.builtins and drop it in the same directory - the
 runtime system it will instantly recognize it.
 
