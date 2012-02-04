@@ -35,9 +35,11 @@ runtime system it will instantly recognize it.
 Just type "styla" to run the system from its precompiled
 "styla.jar" file.
 
-Use the script "compile" to recompile the system with scalac
-"run" to run it with scala and "jrun" to run it with java
-(possibly edit for path info in this case).
+Use the scripts 
+
+"compile" to recompile the system with scalac
+"run" to run it with scala and 
+"jrun" to run it with java (possibly edit for path info in this case).
 
 The file "prolog/fluents/Lib.scala" embeds Prolog code that is present at
 start-up. New Prolog code that you want part of the default libraries
@@ -47,4 +49,28 @@ Enjoy,
 
 Paul Tarau
 
+P.S. Styla uses a few interesting Scala goodies, not available in Java:
 
+- higher order functions, maps, folds, case classes etc.
+- combinator parsers - "poor man's DCGs" :-)
+- Scala's elegant implicit conversions between
+  lists, arrays, sequences etc.
+- Scala's arbitrary length integers and decimals (with
+  a natural syntax, in contrast to Java)
+- Scala's """...""" strings - for regexps and to embed 
+  Prolog code directly in Scala classes
+- a few IO abstractions available in Scala that
+  view things like file operations as iterators -
+  a natural match to the original Fluents of
+  Kernel Prolog from which Styla was derived
+  
+- a few IO abstractions available in Scala that
+  view things like file operations as iterators -
+  a natural match to the original Fluents of the
+  Java-based Kernel Prolog from which Styla was derived
+
+Note that he latest version of Kernel Prolog is now an 
+open source Google project at:
+
+http://code.google.com/p/kernel-prolog/
+  
