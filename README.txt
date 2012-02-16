@@ -8,6 +8,24 @@ Styla is a fairly complete Prolog interpreter written in Scala, derived from
 Kernel Prolog (see Fluents: A Refactoring of Prolog for Uniform Reflection 
 and Interoperation with External Objects CL'2000).
 
+Just type "styla" to run the system from its precompiled
+"styla.jar" file. 
+
+If you do not have Scala installed, and just want to embed Styla in
+a Java or Android application, just download the self-contained
+JavaCallsStyla.zip file, unzip it and type "go" inside the resulting folder,
+then customize JavaMain.java as needed.
+
+Use the scripts 
+
+"compile" to recompile the system with scalac
+"run" to run it with scala and 
+"jrun" to run it with java (possibly edit for path info in this case).
+
+The file "prolog/fluents/Lib.scala" embeds Prolog code that is present at
+start-up. New Prolog code that you want part of the default libraries
+can be added there.
+
 Sample programs are in directory "progs".
 
 Try "bm", "bm1", "bm2" shell scripts for benchmarking.
@@ -31,19 +49,6 @@ a glimpse of how to embed it into a Scala or Java program.
 To add a new built-in, just clone the closest match 
 in prolog.builtins and drop it in the same directory - the
 runtime system it will instantly recognize it.
-
-Just type "styla" to run the system from its precompiled
-"styla.jar" file.
-
-Use the scripts 
-
-"compile" to recompile the system with scalac
-"run" to run it with scala and 
-"jrun" to run it with java (possibly edit for path info in this case).
-
-The file "prolog/fluents/Lib.scala" embeds Prolog code that is present at
-start-up. New Prolog code that you want part of the default libraries
-can be added there.
 
 Enjoy,
 
