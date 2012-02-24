@@ -1,0 +1,4 @@
+./clean
+cp ../styla.jar .
+cp  /Applications/typesafe-stack/lib/scala-library.jar .
+cp  /Applications/typesafe-stack/lib/jline.jar .

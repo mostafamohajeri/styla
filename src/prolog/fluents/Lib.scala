@@ -433,7 +433,8 @@ number_chars(N,Cs):-from_chars(Cs,S),to_number(S,N).
 number_codes(N,Ns):-var(Ns),!,to_string(N,A),to_chars(A,Cs),maplist(char2code,Cs,Ns).
 number_codes(N,Ns):-maplist(to_string,Ns,Xs),maplist(code2char,Xs,Cs),from_chars(Cs,N).    
  
-
+atom_concat(A,B,C):-to_chars(A,As),to_chars(B,Bs),append(As,Bs,Cs),from_chars(Cs,C).
+    
 phrase(B,S1,S2):-dcg_phrase(x,B,x(S1,S2),DcgGoal),DcgGoal.
     
 phrase(P,S1):-phrase(P,S1,[]).
