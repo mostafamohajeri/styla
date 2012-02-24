@@ -14,7 +14,9 @@ Just type "styla" to run the system from its precompiled
 If you do not have Scala installed, and just want to embed Styla in
 a Java or Android application, just download the self-contained
 JavaCallsStyla.zip file, unzip it and type "go" inside the resulting folder,
-then customize JavaMain.java as needed.
+then customize JavaMain.java as needed. the same directory contains also
+the scripts "jstyla" and "jstyla.bat" that can run the interactive 
+Styla toplevel, even if you do not have Scala installed. 
 
 Use the scripts 
 
