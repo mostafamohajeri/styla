@@ -12,7 +12,10 @@ class JavaMain {
     */
     
     LogicEngine logicEngine = new LogicEngine();
+    
     logicEngine.setGoal("consult(simple)");
+    //logicEngine.askAnswer();
+    
     logicEngine.setGoal("b(X)");
 
     boolean more = true;

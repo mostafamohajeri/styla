@@ -1,14 +1,6 @@
 package prolog.tests
 
-sealed abstract class T
-case object E extends T
-case class O[A <: T](x: A) extends T
-case class I[A <: T](x: A) extends T
-
-object S {
-  def apply(x: T) = s(x)
-  def unapply(x: T) = p(x)
-
+trait T {
   def s(a: T): T = a match {
     case E => O(E)
     case O(b) => I(b)
@@ -21,14 +13,25 @@ object S {
     case O(b) => I(p(b))
   }
 }
+case object E extends T
+case class O[A <: T](x: A) extends T
+case class I[A <: T](x: A) extends T
+
+object S extends T {
+  def apply(x: T) = s(x)
+  def unapply(x: T) = x match {
+    case E => None
+    case a => Some(p(a))
+  }
+}
 
 object T extends App {
   val a: T = S(S(E))
   println(a)
-  /*
+
   a match {
-   case S(x) => println(x)
+    case S(x) => println(x)
     case _ => println("nothing")
   }
-  */
+
 }

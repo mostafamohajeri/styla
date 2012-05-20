@@ -7,16 +7,11 @@ final class new_engine() extends FunBuiltin("new_engine", 4) {
 
   override def exec(p: Prog) = {
     val files = getArg(0)
-    val db = if (Const.nil == files) p.db
-    else {
-      val file: Term = files.asInstanceOf[Cons].getHead
-      val fname: String = file.asInstanceOf[Const].sym
-      new DataBase(fname)
-    }
+    val answer = getArg(1)
+    val goal = getArg(2)
+    val db = Prog.make_db(files, p)
     val q = new Prog(db)
-    val gs0 = getArg(1) :: Conj.toList(getArg(2))
-    val gs = Term.copyList(gs0, new Copier())
-    q.set_query(gs.head, gs.tail)
+    Prog.init_with(db, answer, goal, q)
     putArg(3, q, p)
   }
 }

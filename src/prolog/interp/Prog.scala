@@ -2,13 +2,7 @@ package prolog.interp
 
 import prolog.fluents.DataBase
 import prolog.io.IO
-import prolog.terms.Answer
-import prolog.terms.Conj
-import prolog.terms.Copier
-import prolog.terms.ObjectStack
-import prolog.terms.Term
-import prolog.terms.TermSource
-import prolog.terms.Trail
+import prolog.terms._
 
 class Prog(val db: DataBase) extends TermSource {
   def this() = this(new DataBase(null))
@@ -152,5 +146,22 @@ class Prog(val db: DataBase) extends TermSource {
       orStack.clear()
       isStopped = true
     }
+  }
+}
+
+object Prog extends Prog {
+  def make_db(files: Term, p: Prog) = {
+    if (Const.nil == files) p.db
+    else {
+      val file: Term = files.asInstanceOf[Cons].getHead
+      val fname: String = file.asInstanceOf[Const].sym
+      new DataBase(fname)
+    }
+  }
+
+  def init_with(db: DataBase, x: Term, g: Term, q: Prog) = {
+    val gs0 = x :: Conj.toList(g)
+    val gs = Term.copyList(gs0, new Copier())
+    q.set_query(gs.head, gs.tail)
   }
 }

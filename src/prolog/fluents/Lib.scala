@@ -5,9 +5,9 @@ object Lib {
 /* default library */
     
 % '='(X,X). 
-
-% stubs for special operations
     
+% stubs for special operations
+
 return(_). 
 dynamic(_).
 multifile(_).
@@ -29,6 +29,7 @@ atomic(X):-type_of(X,T),member(T,[atom,float,integer,system_object]),!.
 number(X):-type_of(X,T),member(T,[float,integer]),!.
 
 new_engine(X,G,E):-new_engine([],X,G,E). 
+    
 
 first_solution(X0,G0,A):-copy_term(the(X0,G0),the(X,G)),G,!,eq(A,the(X)).
 first_solution(_,_,no).
@@ -675,8 +676,24 @@ list_is_free_of([Head|Tail], Var) :-
     Head \== Var,
     list_is_free_of(Tail, Var).
   
-    
+% actors 
 
+scala_actor_new(A):-scala_actor_new([],A). 
+
+set_last_sender(no).
+set_last_sender(the(Sender)):-
+  retractall('$last_sender'(_)),
+  assert('$last_sender'(Sender)).    
+
+get_last_sender(Sender):-
+  is_defined('$last_sender'(_)),
+  '$last_sender'(Sender),
+  println(get_last_sender(Sender)),
+  true.
+    
+scala_actor_reply(Msg):-
+  get_last_sender(Sender),
+  scala_actor_send(Sender,Msg).
     
 """
 }
