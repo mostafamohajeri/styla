@@ -1,40 +1,43 @@
 package prolog.acts
-import scala.actors._
+import scala.actors.Actor
 import prolog.LogicEngine
 import prolog.terms._
 import prolog.fluents.DataBase
 
-class ScalaLogicActor(aName: String, db: DataBase)
-  extends SystemObject with Actor {
-  override def name = aName
-  val engine = new LogicEngine(db)
-  //engine.set
+/**
+ * Prolog-based Actor using Scala's built-in Actor API
+ * see builtins starting with "scala_" for use from Prolog
+ *
+ * message handlers are simply Prolog clauses -
+ *    if the head unifies the body triggers actions -
+ *    typically that includes sending messages to other Actors
+ */
 
-  private def call(msg: Term): Term = {
-    engine.setGoal(new Var(), msg)
-    //println("Answer:-GOAL=" + answer + ":-" + goal)
-    engine.askAnswer()
+class ScalaLogicActor(aName: String, db: DataBase)
+  extends LogicActor(aName, db) with Actor {
+  start
+
+  def sendTo(msg: Term) {
+    this ! msg
+  }
+
+  def getSender: Term = {
+    sender match {
+      case x: ScalaLogicActor => Const.the(x)
+      case other => Const.no
+    }
   }
 
   def act() {
     loop {
       react {
-        case msg: String if msg == "$stop" => {
-          engine.stop // destroy Engine
+        case stop_msg: Const if stop_msg.name == "$stop" => {
+          stopLogic
           exit()
         }
-        case msg: Term => {
-          //println("sender=" + sender)
-          val from = sender match {
-            case x: ScalaLogicActor => Const.the(x)
-            case other => Const.no
-          }
-          val guard = new Fun("set_last_sender", Array(from))
-          val g = new Conj(guard, msg)
-          //println("GOT:" + g)
-          val result = call(g)
-          //println("res=" + result)
-        }
+        case goal_msg: Term => logicAction(goal_msg)
+        case other => otherAction(other)
+
       }
     }
   }

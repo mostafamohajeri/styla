@@ -3,6 +3,9 @@ import prolog.terms._
 import prolog.builtins._
 import scala.collection.mutable._
 
+/**
+ * currently not used
+ */
 class Expander {
   val map = new LinkedHashMap[Var, Var]
   val code = new ArrayBuffer[Term]()

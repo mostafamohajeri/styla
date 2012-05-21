@@ -13,7 +13,7 @@ class JavaMain {
     
     LogicEngine logicEngine = new LogicEngine();
     
-    logicEngine.setGoal("consult(simple)");
+    logicEngine.setGoal("consult('simple/b')");
     //logicEngine.askAnswer();
     
     logicEngine.setGoal("b(X)");

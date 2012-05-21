@@ -1,23 +1,42 @@
 scala_actor_test:-
-  scala_actor_new([scalaActor1],A),
-  scala_actor_new([scalaActor2],B),
-  scala_actor_start(A),
-  scala_actor_start(B),
-  scala_actor_send(A,
+  actor_scala_new([scalaActor1],A),
+  actor_scala_new([scalaActor2],B),
+  actor_send(A,
     (member(X,[hello,hola]),println(X),fail)),
-  scala_actor_send(A,
+  actor_send(A,
     assert(self(A))),
-  scala_actor_send(A,
-    scala_actor_send(B,handle(println(hello_from(A))))),
-  scala_actor_send(A,println(bye)),
+  actor_send(A,
+    actor_send(B,handle(println(hello_from(A))))),
+  actor_send(A,println(bye)),
 
   (for(_,1,1000000),fail;true),
   
   println(stopping),
-  scala_actor_stop(A),
-  scala_actor_stop(B),
-  scala_actor_send(A,println(post_bye)),
-  scala_actor_send(B,println(post_bye)),
+  actor_stop(A),
+  actor_stop(B),
+  actor_send(A,println(post_bye)),
+  actor_send(B,println(post_bye)),
+  println(done).
+
+
+akka_actor_test:-
+  actor_akka_new([scalaActor1],A),
+  actor_akka_new([scalaActor2],B),
+  actor_send(A,
+    (member(X,[hello,hola]),println(X),fail)),
+  actor_send(A,
+    assert(self(A))),
+  actor_send(A,
+    actor_send(B,handle(println(hello_from(A))))),
+  actor_send(A,println(bye)),
+
+  (for(_,1,1000000),fail;true),
+  
+  println(stopping),
+  actor_stop(A),
+  actor_stop(B),
+  actor_send(A,println(post_bye)),
+  actor_send(B,println(post_bye)),
   println(done).
 
 rtest:-

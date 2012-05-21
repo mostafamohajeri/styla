@@ -678,7 +678,9 @@ list_is_free_of([Head|Tail], Var) :-
   
 % actors 
 
-scala_actor_new(A):-scala_actor_new([],A). 
+actor_scala_new(A):-actor_scala_new([],A). 
+
+actor_akka_new(A):-actor_akka_new([],A). 
 
 set_last_sender(no).
 set_last_sender(the(Sender)):-
@@ -691,9 +693,12 @@ get_last_sender(Sender):-
   println(get_last_sender(Sender)),
   true.
     
-scala_actor_reply(Msg):-
+actor_reply(Msg):-
   get_last_sender(Sender),
-  scala_actor_send(Sender,Msg).
+  actor_send(Sender,Msg).
+
+actor_stop(Actor):-actor_send(Actor,'$stop').
+    
     
 """
 }

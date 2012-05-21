@@ -10,10 +10,18 @@ import prolog.io._
 case class Key(f: String, n: Int)
 
 class DataBase(fname: String) extends LinkedHashMap[Key, Deque[List[Term]]] {
-  val vars = new LinkedHashMap[String, Var]
+
   def this() = this(null)
 
+  def this(name: String, cs: List[List[Term]]) {
+    this()
+    addAll(cs)
+  }
+
   type CLAUSE = List[Term]
+
+  val vars = new LinkedHashMap[String, Var]
+
   if (null != fname) {
     fromFile(fname, true)
   } else
@@ -179,6 +187,7 @@ class DataBase(fname: String) extends LinkedHashMap[Key, Deque[List[Term]]] {
 object DataBase {
   val parser = new TermParser()
   val vars = parser.vars
+  // ensures this is only parsed once and then reused when creating a new db
   val lib = parser.parseProg(Lib.code)
 
   def key2fun(k: Key) =

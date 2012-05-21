@@ -4,6 +4,10 @@ import prolog.terms._
 import prolog.io._
 import prolog.interp.Prog
 
+/**
+ * sketch of a compilation mechanism
+ */
+
 class code extends Prog {
   def get_fun(name: String, arity: Int, v: Var, p: Prog): Boolean = {
     val ok = v.ref match {
