@@ -80,4 +80,5 @@ Note that he latest version of Kernel Prolog is now an
 open source Google project at:
 
 http://code.google.com/p/kernel-prolog/
-  
+-------------------------------------------  
+New: development of Scala and Akka Actors.

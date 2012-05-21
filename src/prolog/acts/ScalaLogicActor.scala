@@ -1,8 +1,10 @@
 package prolog.acts
-import scala.actors.Actor
+
 import prolog.LogicEngine
 import prolog.terms._
 import prolog.fluents.DataBase
+
+import scala.actors.Actor
 
 /**
  * Prolog-based Actor using Scala's built-in Actor API

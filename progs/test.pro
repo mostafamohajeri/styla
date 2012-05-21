@@ -20,8 +20,8 @@ scala_actor_test:-
 
 
 akka_actor_test:-
-  actor_akka_new([scalaActor1],A),
-  actor_akka_new([scalaActor2],B),
+  actor_akka_new([akkaActor1],A),
+  actor_akka_new([akkaActor2],B),
   actor_send(A,
     (member(X,[hello,hola]),println(X),fail)),
   actor_send(A,
