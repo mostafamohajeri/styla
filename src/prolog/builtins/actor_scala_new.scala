@@ -11,7 +11,8 @@ final class actor_scala_new()
   override def exec(p: Prog) = {
     val files = getArg(0)
     val db = Prog.make_db(files, p)
-    val q = new ScalaLogicActor(files.toString, db)
+    val aName = files.asInstanceOf[Cons].getHead.toString
+    val q = new ScalaLogicActor(aName, db)
     putArg(1, q, p)
   }
 }

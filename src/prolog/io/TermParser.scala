@@ -230,15 +230,29 @@ object TermParser {
       case None => {
 
         try {
-          val b = Class.forName("prolog.builtins." + s).newInstance
-          if (b.isInstanceOf[FunBuiltin] || b.isInstanceOf[ConstBuiltin]) {
-            val c = b.asInstanceOf[Const]
-            builtinMap.put(s, c)
-            c
-          } else
-            null
+          val bclass = Class.forName("prolog.builtins." + s)
+
+          try {
+
+            val b = bclass.newInstance
+
+            if (b.isInstanceOf[FunBuiltin] || b.isInstanceOf[ConstBuiltin]) {
+              val c = b.asInstanceOf[Const]
+              builtinMap.put(s, c)
+              c
+            } else {
+              println("unexpected prolog.builtins class =>" + s)
+              null
+            }
+          } catch {
+            case e => {
+              println("unexpected builtin creation failure =>" + s + "=>" + e)
+              null
+            }
+          }
         } catch {
           case _ => {
+            //println("expected builtin creation failure =>" + s)
             null
           }
         }

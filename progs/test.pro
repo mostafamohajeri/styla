@@ -1,6 +1,6 @@
-scala_actor_test:-
-  actor_scala_new([scalaActor1],A),
-  actor_scala_new([scalaActor2],B),
+scala_test:-
+  actor_scala_new([actor1],A),
+  actor_scala_new([actor2],B),
   actor_send(A,
     (member(X,[hello,hola]),println(X),fail)),
   actor_send(A,
@@ -9,7 +9,7 @@ scala_actor_test:-
     actor_send(B,handle(println(hello_from(A))))),
   actor_send(A,println(bye)),
 
-  (for(_,1,1000000),fail;true),
+  sleep(1),
   
   println(stopping),
   actor_stop(A),
@@ -19,9 +19,9 @@ scala_actor_test:-
   println(done).
 
 
-akka_actor_test:-
-  actor_akka_new([akkaActor1],A),
-  actor_akka_new([akkaActor2],B),
+akka_test:-
+  actor_akka_new([actor1],A),
+  actor_akka_new([actor2],B),
   actor_send(A,
     (member(X,[hello,hola]),println(X),fail)),
   actor_send(A,
@@ -30,7 +30,7 @@ akka_actor_test:-
     actor_send(B,handle(println(hello_from(A))))),
   actor_send(A,println(bye)),
 
-  (for(_,1,1000000),fail;true),
+  sleep(1),
   
   println(stopping),
   actor_stop(A),

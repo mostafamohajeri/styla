@@ -88,9 +88,12 @@ class Prog(val db: DataBase) extends TermSource {
             b = newgoal.head.ref
             ret = b.exec(this)
           } catch {
-            case err =>
-              ret = IO.errmes(err.getLocalizedMessage() +
+            case err => {
+              //println("error=" + err)
+              //ret = IO.errmes(err.getLocalizedMessage() +
+              ret = IO.errmes(err +
                 ",\n*** bad arguments in built-in", b, this)
+            }
           }
           if (ret >= 0) newgoal = newgoal.tail
         }

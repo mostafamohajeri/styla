@@ -6,6 +6,8 @@ import prolog.fluents.DataBase
 
 abstract class LogicActor(aName: String, db: DataBase)
   extends SystemObject {
+  def this(fname: String) = this(fname, new DataBase(fname))
+
   override def name = aName
   private val engine = new LogicEngine(db)
 

@@ -676,6 +676,8 @@ list_is_free_of([Head|Tail], Var) :-
     Head \== Var,
     list_is_free_of(Tail, Var).
   
+sleep(Sec):-Ms is Sec*1000,sleep_ms(Ms).
+    
 % actors 
 
 actor_scala_new(A):-actor_scala_new([],A). 
@@ -688,9 +690,10 @@ set_last_sender(the(Sender)):-
   assert('$last_sender'(Sender)).    
 
 get_last_sender(Sender):-
+  % println('ENTERING_get_last_SENDER'),
   is_defined('$last_sender'(_)),
   '$last_sender'(Sender),
-  println(get_last_sender(Sender)),
+  % println('EXITING_get_last_sender'(Sender)),
   true.
     
 actor_reply(Msg):-

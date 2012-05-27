@@ -7,9 +7,11 @@ import prolog.acts.LogicActor
 final class actor_send() extends FunBuiltin("actor_send", 2) {
 
   override def exec(p: Prog) = {
-    val a = getArg(0).asInstanceOf[LogicActor]
+    val x = getArg(0)
     val msg = getArg(1)
-    a.sendTo(msg)
+    x match {
+      case a: LogicActor => a.sendTo(msg)
+    }
     1
   }
 }

@@ -6,28 +6,83 @@ import prolog.fluents.DataBase
 
 import akka.actor._
 
-class AkkaLogicActor(aName: String, db: DataBase)
-  extends LogicActor(aName, db) with Actor {
+class AkkaLogicActor(aName: String, db: DataBase, aref: ActorRef)
+  extends LogicActor(aName, db) {
 
-  def sendTo(msg: Term) {
-    self ! msg
+  var lastSender: ActorRef = null
+
+  val skinref = makeSkinRef(aref)
+
+  def makeSkinRef(x: Any) = x match {
+    case x if null == x => AkkaLogicActor.create(this, aName)
   }
 
-  def getSender: Term = {
-    context.sender match {
-      case x: AkkaLogicActor => Const.the(x)
-      case other => Const.no
-    }
+  def sendTo(msg: Term) {
+    skinref ! SEND(msg)
+  }
+
+  def getSender: Term =
+    if (null == lastSender) Const.no
+    else Const.the(new AkkaLogicActorWrapper(lastSender))
+}
+
+class AkkaLogicActorWrapper(aref: ActorRef)
+  extends AkkaLogicActor(aref.path.toString, null, aref) {
+
+  override def makeSkinRef(x: Any) = x match {
+    case aref: ActorRef => aref
+  }
+}
+
+sealed trait MessageTerm
+case class SEND(msg: Term) extends MessageTerm
+
+class ActorSkin(val actor: AkkaLogicActor) extends Actor {
+
+  override def preStart() {
+    //println("prestart=" + actor)
+  }
+
+  override def postStop() = {
+    actor.stopLogic
+    //println("logic stopped for=" + actor)
+  }
+
+  def setSenderOf(msg: Any, sender: ActorRef) {
+    //println("sender=" + sender)
+    actor.lastSender = sender
   }
 
   def receive = {
     case stop_msg: Const if stop_msg.name == "$stop" => {
-      stopLogic
-      sys.exit()
+      setSenderOf(stop_msg, sender)
+      context.stop(self)
     }
-    case goal_msg: Term => logicAction(goal_msg)
-    case other => otherAction(other)
+    case goal_msg: Term => {
+      setSenderOf(goal_msg, sender)
+      actor.logicAction(goal_msg)
+    }
+    case SEND(msg) => self ! msg
+    case other => {
+      setSenderOf(other, sender)
+      actor.otherAction(other)
+    }
 
   }
+}
+
+object AkkaLogicActor {
+  def stop = asystem.shutdown()
+  val asystem = ActorSystem.create()
+
+  /*
+  val topActorRef =
+    asystem.actorOf(Props[ActorSkin], name = "topAkkaLogicActor")
+  */
+
+  def create(logicActor: AkkaLogicActor, aName: String) = {
+    asystem.actorOf(Props(new ActorSkin(logicActor)), name = aName)
+  }
+
 }
 
