@@ -1,2 +1,3 @@
+rm -r -f bin
 mkdir bin
 scalac -classpath "/usr/local/Cellar/akka/2.0.1/libexec/lib/akka/akka-actor-2.0.1.jar" -optimize -explaintypes -deprecation -unchecked -d bin  src/prolog/*.scala src/prolog/*/*.scala

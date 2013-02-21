@@ -1,5 +1,6 @@
 package prolog.io
 
+//import scala.language.postfixOps -- 2.10 only
 import scala.util.parsing.combinator._
 import scala.collection.mutable._
 import java.io.File
@@ -245,13 +246,14 @@ object TermParser {
               null
             }
           } catch {
-            case e => {
+            case e: Error => {
               println("unexpected builtin creation failure =>" + s + "=>" + e)
               null
             }
           }
-        } catch {
-          case _ => {
+        } catch { // thrown as as we try to see which are our built-ins
+          case err: ClassNotFoundException => {
+            //println("err=" + err)
             //println("expected builtin creation failure =>" + s)
             null
           }

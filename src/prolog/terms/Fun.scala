@@ -50,7 +50,7 @@ class Fun(sym: String, var args: Array[Term]) extends Const(sym) {
       // use of clone is needed for "polymorphic" copy 
       clone().asInstanceOf[this.type]
     } catch {
-      case _ => {
+      case _: Error => {
         IO.warnmes("funcClone failed on" + this)
         null
       }
