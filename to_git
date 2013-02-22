@@ -1,0 +1,15 @@
+tar -cf styla.tar src JavaCallsStyla progs doc styla to_jar to_git go run jrun jstyla compile bm bm1 bm2 jbm *.jar *.txt *.pro *.bat *.sh
+mv *.tar ../../git/styla
+pushd .
+cd ../../git/styla
+rm -r -f progs doc styla JavaCallsStyla to_jar go run jrun compile bm bm1 bm2 jbm *.jar *.txt *.pro *.bat
+tar xvf styla.tar
+rm -f styla.tar
+# remove any existing files from the repo, skipping over ones not in repo
+find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch
+# specify a global exclusion list
+git config --global core.excludesfile ~/.gitignore
+# adding .DS_Store to that list
+#echo .DS_Store >> ~/.gitignore
+popd
+

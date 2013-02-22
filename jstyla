@@ -1,0 +1,1 @@
+java -server -Xmx2G -classpath /usr/local/Cellar/scala/2.9.2/libexec/lib/scala-library.jar:/usr/local/Cellar/scala/2.9.2/libexec/lib/jline.jar:styla.jar prolog.Main $1 $2 $3 $4 $5 $6 $7 $8 $9
