@@ -11,7 +11,7 @@ object IO {
 
   def start = {
     println("Styla: Scala Terms Yield Logic Agents")
-    println("Prolog System Version 0.3.4 with LogicActors")
+    println("Prolog System Version 1.3.4 with LogicActors")
     println("Copyright (C) Paul Tarau 2011-2014")
   }
 
