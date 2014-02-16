@@ -4,6 +4,43 @@ import prolog.fluents.DataBase
 import prolog.io.IO
 import prolog.terms._
 
+/**
+ * The class Prog implements instances of Prolog interpreters, wrapped up as self-contained
+ * first-class LogicEngines, usable as Scala or Akka actors. It is parameterized by a
+ * DataBase object containing Prolog clauses. A default library encapsulated
+ * as a Scala class in file Lib.scala is added automatically when a DataBase object is
+ * created by a TermParser from a source file.
+ * 
+ * A Prog uses two stacks. 
+ * 
+ * The orStack is implemented as a mutable ObjectStack that
+ * handles backtracking.
+ * 
+ * A List-represented goal stack that contains the current
+ * resolvent for a given choice. 
+ * 
+ * The goal-stack is pushed/popped as needed from the
+ * the orStack but being represented as an immutable List its tail is actually shared
+ * so this operation is quite efficient. The underlying model is the unfolding of a
+ * predicate head present in a goal atom into its body. The clause, once matched, is copied
+ * and its body occupies the top of the goal stack. As variables on the goal stack end up
+ * being shared between alternative or branches, a trail, unique to a Prog is used to
+ * record binding of variables that ere undone on backtracking. This is handled 
+ * by the related Unfolder class, which also executed built-in sequences hanging between
+ * genuine Prolog predicates.
+ * 
+ * All built-ins are deterministic, implemented as Scala functions and as such 
+ * no backtracking is implemented within them, except that they trail variable bindings.
+ * As they are never pushed on a stack, they are incur no space overhead.
+ * 
+ * To speed-up built-in calls, a simple reflection mechanism is used at parsing time
+ * when their string names are associated to the corresponding Scala objects and then
+ * cached in a Map. The convention is that all built-ins are hosted in the package
+ * prolog.builtins. This allows the parser to instantly recognize them, without any
+ * glue code needed for calling them at runtime through an exec() method.
+ * 
+ */
+
 class Prog(val db: DataBase) extends TermSource {
   def this() = this(new DataBase(null))
   def this(fname: String) = this(new DataBase(fname))
@@ -54,7 +91,7 @@ class Prog(val db: DataBase) extends TermSource {
     set_query(null, query: GOAL)
   }
 
-  private def pushUnfolder(g0: GOAL): (GOAL, Term) = {
+  def pushUnfolder(g0: GOAL): (GOAL, Term) = {
     val g = reduceBuiltins(g0)
     var return_term: Term = null
 
@@ -115,6 +152,7 @@ class Prog(val db: DataBase) extends TermSource {
     var more = true
     while (more && !orStack.isEmpty) {
       val step: Unfolder = orStack.top
+      //println("step="+step)
       newgoal = step.nextGoal()
 
       if (step.lastClause && !orStack.isEmpty) {

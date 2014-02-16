@@ -8,6 +8,6 @@ Enjoy,
 
 Paul Tarau
 
-P.S. You can also try out interactively your programs by running the script "jstyla",
+P.S. You can also try out interactively your programs by running the script "jstyla.sh",
 even if you do not have Scala installed.
 

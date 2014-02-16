@@ -18,11 +18,16 @@ class TermParser(val vars: LinkedHashMap[String, Var])
     val x = if ("_" == x0) x0 + x0 + vars.size else x0
     vars.getOrElseUpdate(x, new Var())
   }
+  
+  def mkEVar(x: String) = {
+    vars.getOrElseUpdate(x, new EVar())
+  }
 
   def trimQuotes(q: String) = q.substring(1, q.length() - 1)
 
   protected override val whiteSpace = """(\s|%.*|(?m)/\*(\*(?!/)|[^*])*\*/)+""".r
 
+  val evarToken: Parser[String] = """~[A-Z_]\w*""".r
   val varToken: Parser[String] = """[A-Z_]\w*""".r
   val symToken: Parser[String] = """[a-z]\w*""".r
   val numToken: Parser[String] = """-?(\d+)(\.\d+)?""".r
@@ -118,6 +123,7 @@ class TermParser(val vars: LinkedHashMap[String, Var])
 
   def funTerm: Parser[Term] =
     varToken ^^ mkVar |
+    evarToken ^^ mkEVar |
       numToken ^^
       { x => new Real(x) } |
       (idToken ~ opt(args)) ^^
@@ -225,13 +231,16 @@ object TermParser {
       t
   }
 
-  private def string2builtin(s: String): Const = {
+  private def string2builtin(s0: String): Const = {
 
-    val res = builtinMap.get(s) match {
+    val res = builtinMap.get(s0) match {
       case None => {
 
         try {
-          val bclass = Class.forName("prolog.builtins." + s)
+          val s=if(s0.length>3 && s0.contains('.')) s0 
+          else "prolog.builtins." + s0
+          
+          val bclass = Class.forName(s)
 
           try {
 

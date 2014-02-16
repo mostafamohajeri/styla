@@ -29,4 +29,3 @@ maplist_(P,[X|Xs],[Y|Ys],[Z|Zs]):-
   call(P,X,Y,Z),
   maplist_(P,Xs,Ys,Zs).
   
-

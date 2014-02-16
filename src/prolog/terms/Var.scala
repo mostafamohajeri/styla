@@ -1,10 +1,10 @@
 package prolog.terms
 import scala.collection.mutable.LinkedHashSet
 
-final class Var() extends Term {
+class Var() extends Term {
   private var value: Term = this
 
-  private final def unbound = this.eq(value)
+  final def unbound = this.eq(value)
 
   override def ref: Term =
     if (unbound) this else value.ref

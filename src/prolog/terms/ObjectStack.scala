@@ -1,7 +1,7 @@
 package prolog.terms
 
 import scala.collection.mutable.ArrayStack
-// AWFUL PERFORMANCE BUG if using import scala.collection.mutable.Stack
+// AWFUL PERFORMANCE BUG if using import scala.collection.imutable.Stack
 
 class ObjectStack[Term] extends ArrayStack[Term] {
   override def toString = {

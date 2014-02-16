@@ -62,7 +62,9 @@ object Main extends App {
           }
         }
         IO.println("no (more) answers\n")
+        prog.trail.unwind(0)
       }
+     
     }
   }
 }

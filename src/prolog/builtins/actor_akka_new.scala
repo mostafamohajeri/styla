@@ -8,7 +8,6 @@ final class actor_akka_new()
   extends FunBuiltin("actor_akka_new", 2) {
 
   override def exec(p: Prog) = {
-    //println("EXEC:" + this)
     val files = getArg(0)
     val db = Prog.make_db(files, p)
     val aName = files.asInstanceOf[Cons].getHead.toString

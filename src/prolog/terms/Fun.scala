@@ -42,7 +42,7 @@ class Fun(sym: String, var args: Array[Term]) extends Const(sym) {
   }
 
   // stuff allowing polymorphic cloning of Fun subclasses
-  // without using reflection - should be probaly faster than
+  // without using reflection - should be probably faster than
   // reflection classes - to check
 
   final def funClone(): Fun = {

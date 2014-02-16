@@ -4,7 +4,10 @@ import prolog.builtins._
 import scala.collection.mutable._
 
 /**
- * currently not used
+ * currently not used -- todo
+ * 
+ * it would expand to code using eq and arg
+ * explicitly building terms - for use to a compiler
  */
 class Expander {
   val map = new LinkedHashMap[Var, Var]

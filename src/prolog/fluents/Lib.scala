@@ -702,6 +702,10 @@ actor_reply(Msg):-
 
 actor_stop(Actor):-actor_send(Actor,'$stop').
     
+% experiments
     
+appendx(Xs,Ys,Zs):- 'prolog.tests.append0'(Xs,Ys,Zs).
+appendx(Xs,Ys,Zs):- 'prolog.tests.append1'(Xs,Ys,Zs).
+        
 """
 }

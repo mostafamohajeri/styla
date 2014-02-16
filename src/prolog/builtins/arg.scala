@@ -4,11 +4,13 @@ import prolog.interp.Prog
 import prolog.io.IO
 
 final class arg() extends FunBuiltin("arg", 3) {
+  
   def as(i: Int, f: Fun, x: Term) = {
     args = Array(SmallInt(i), f, x)
     this
   }
-
+  
+  
   override def exec(p: Prog) = {
     val f0 = getArg(1)
     val i0 = getArg(0)
