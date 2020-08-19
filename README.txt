@@ -1,3 +1,6 @@
+This is a Port of the https://github.com/fedesilva/styla to scala 2.13.3
+
+
 Styla - a Prolog in Scala,
 
 The name STYLA stands tentatively for "Scala Terms Yield Logic Agents" but hints
