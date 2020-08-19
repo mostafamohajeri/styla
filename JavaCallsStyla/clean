@@ -1,1 +1,0 @@
-rm -f *.class *.jar

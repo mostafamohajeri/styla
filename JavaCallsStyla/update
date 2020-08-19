@@ -1,5 +1,0 @@
-./clean
-cp ../styla.jar .
-cp /usr/local/Cellar/akka/2.0.1/libexec/lib/akka/akka-actor-2.0.1.jar .
-cp /usr/local/Cellar/scala/2.9.2/libexec/lib/scala-library.jar .
-cp /usr/local/Cellar/scala/2.9.2/libexec/lib/jline.jar .
