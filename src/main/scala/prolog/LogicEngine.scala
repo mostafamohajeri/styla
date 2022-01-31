@@ -22,6 +22,16 @@ class LogicEngine(db: DataBase) extends Prog(db) {
     Prog.init_with(db, answer, goal, this)
   }
 
+  def setGoalAndAskAnswer(query: String): Term = {
+    set_query(parser.parse(query))
+    this.getElement()
+  }
+
+  def setGoalAndAskAnswer(query: Term): Term = {
+    set_query(List(query))
+    this.getElement()
+  }
+
   def askAnswer(): Term = this.getElement()
 }
 

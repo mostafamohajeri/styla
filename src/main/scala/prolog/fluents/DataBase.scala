@@ -146,7 +146,14 @@ class DataBase(fname: String) extends LinkedHashMap[Key, Deque[List[Term]]] {
     val r = get(k)
     r match {
       case None => -1
-      case Some(cs) => if (cs.isEmpty) 0 else 1
+      case Some(css) =>
+        val trail = new Trail()
+        def is_matching(cs: CLAUSE) = h.matches(cs.head, trail)
+        val maybeCs = css.find(is_matching)
+        maybeCs match {
+          case None => 0
+          case Some(cs) => 1 // .head
+        }
     }
   }
 
@@ -161,6 +168,17 @@ class DataBase(fname: String) extends LinkedHashMap[Key, Deque[List[Term]]] {
     val cs: Deque[CLAUSE] =
       getOrElseUpdate(k, new Deque[CLAUSE]())
     cs.push(c)
+  }
+
+
+  def pushIfNotExists(c: CLAUSE) : Boolean = {
+    val exists = has_clauses(c.head)
+    exists match {
+      case 1 => false
+      case _ =>
+        push(c)
+        true
+    }
   }
 
   def del1(h: Term): List[Term] = {
@@ -179,6 +197,14 @@ class DataBase(fname: String) extends LinkedHashMap[Key, Deque[List[Term]]] {
           case Some(cs) => cs // .head
         }
       }
+    }
+  }
+
+  def delIfExists(h: Term): Boolean = {
+    val del = del1(h)
+    del match {
+      case null => false
+      case _ => true
     }
   }
 

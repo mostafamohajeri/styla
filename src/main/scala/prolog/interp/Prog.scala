@@ -55,7 +55,7 @@ class Prog(val db: DataBase) extends TermSource {
   val copier = new Copier()
 
   private var answer: Term = null
-  private var query: GOAL = null
+   var query: GOAL = null
 
   var isStopped = true
   private var justBuiltins = false
@@ -90,7 +90,6 @@ class Prog(val db: DataBase) extends TermSource {
   }
 
   def set_query(query: GOAL) {
-//    println(query)
     set_query(null, query: GOAL)
   }
 
@@ -98,7 +97,7 @@ class Prog(val db: DataBase) extends TermSource {
     val g = reduceBuiltins(g0)
     var return_term: Term = null
 
-    if (!g.eq(null) && !g.isEmpty) {
+    if (!g.eq(null) && g.nonEmpty) {
       g.head match {
         // we assume the stub return(_) is defined
         case f: Answer =>
@@ -123,9 +122,9 @@ class Prog(val db: DataBase) extends TermSource {
     if (null == goal) null
     else {
       var newgoal = goal
-      if (!newgoal.isEmpty) {
+      if (newgoal.nonEmpty) {
         var ret = 1
-        while (ret > 0 && !newgoal.isEmpty) {
+        while (ret > 0 && newgoal.nonEmpty) {
           var b: Term = null
           try {
             b = newgoal.head.ref
@@ -156,7 +155,7 @@ class Prog(val db: DataBase) extends TermSource {
 
     var newgoal: GOAL = null
     var more = true
-    while (more && !orStack.isEmpty) {
+    while (more && orStack.nonEmpty) {
       val step: Unfolder = orStack.top
       //println("step="+step)
       newgoal = step.nextGoal()
@@ -200,7 +199,7 @@ class Prog(val db: DataBase) extends TermSource {
 
   def substitutions() =
     this.trail.clone()
-      .filter(v => v.isInstanceOf[Var] && !v.asInstanceOf[Var].v_name.equals(""))
+      .filter(v => v.isInstanceOf[Var] && !v.v_name.equals(""))
       .map(v => v.v_name -> v.ref)
       .toMap
 }

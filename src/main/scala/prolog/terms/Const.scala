@@ -1,6 +1,6 @@
 package prolog.terms
 
-class Const(val sym: String) extends Nonvar {
+class Const(val sym: String, source: Any = None) extends Nonvar {
   override def name = sym
   def len: Int = 0
 

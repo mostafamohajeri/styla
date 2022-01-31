@@ -10,7 +10,7 @@ final case class cut(x: Var) extends FunBuiltin("cut", 1) {
     val orTop = getArg(0).asInstanceOf[SmallInt].nval
     var i = p.orStack.size - orTop
     while (i >= 0) {
-      if (!p.orStack.isEmpty) p.orStack.pop()
+      if (p.orStack.nonEmpty) p.orStack.pop()
       i -= 1
     }
     1

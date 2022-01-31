@@ -3,10 +3,12 @@ import prolog.interp.Prog
 import prolog.io.IO
 import scala.collection.mutable.LinkedHashSet
 
-class Fun(sym: String, var args: Array[Term]) extends Const(sym) {
+class Fun(sym: String, var args: Array[Term], source: Any = None) extends Const(sym,source) {
   def this(sym: String) = this(sym, null)
 
   override def len = args.length
+
+
 
   final def init(arity: Int) {
     this.args = new Array[Term](arity)
